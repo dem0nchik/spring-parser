@@ -1,10 +1,16 @@
 plugins {
-    //id 'java'
-    id 'war'
+    id 'java'
+    //id 'war'
+    id "application"
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.test.spring.StartupApp'
+}
+
 
 repositories {
     mavenCentral()
@@ -12,6 +18,7 @@ repositories {
 
 dependencies {
     def springVersion = '5.3.8'
+    def tomcatVersion = '9.0.36'
     implementation group: 'org.springframework', name: 'spring-core', version: springVersion
     implementation group: 'org.springframework', name: 'spring-web', version: springVersion
     implementation group: 'org.springframework', name: 'spring-webmvc', version: springVersion
@@ -19,6 +26,9 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-context', version: springVersion
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: tomcatVersion
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: tomcatVersion
+    implementation group: 'org.apache.tomcat', name: 'tomcat-jasper', version: tomcatVersion
 
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.12.RELEASE'
@@ -27,9 +37,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
-war {
+/*war {
     archiveName 'ROOT.war'
-}
+}*/
 
 test {
     useJUnitPlatform()
