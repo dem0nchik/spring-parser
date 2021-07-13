@@ -1,4 +1,4 @@
-package com.test.spring;
+package com.test.spring.parser;
 
 public class ResultValidation {
     private boolean isValid;

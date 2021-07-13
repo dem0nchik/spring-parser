@@ -1,4 +1,4 @@
-package com.test.spring;
+package com.test.spring.parser;
 
 import org.springframework.stereotype.Service;
 

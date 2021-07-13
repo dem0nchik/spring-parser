@@ -1,4 +1,4 @@
-package com.test.spring;
+package com.test.spring.parser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,14 +37,17 @@ public class Parser {
     public HashMap<String, Integer> countUniqueWords(InputStream inputStream) throws IOException {
         HashMap<String, Integer> map = new HashMap<>();
 
-        try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream)) {
+        try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8")) {
             int data = inputStreamReader.read();
             String word = "";
 
             while (data != -1) {
                 char sym = (char) data;
 
-                if (sym != '\r' && sym != '\n' && sym != ' ') {
+                if (sym != '\r' && sym != '\n'
+                    && sym != ' ' && sym != ','
+                    && sym != '.' && sym != ';'
+                ) {
                     word += sym;
                 } else if(word.length() != 0) {
                     if (map.containsKey(word))
@@ -71,7 +74,7 @@ public class Parser {
         return map;
     }
 
-    public String stringMapOfWords(HashMap<String, Integer> map) {
+    public String mapOfWordsToString(HashMap<String, Integer> map) {
         StringBuilder data = new StringBuilder();
         for (String key : map.keySet()) {
             data.append(key).append(" - ").append(map.get(key)).append("\n");

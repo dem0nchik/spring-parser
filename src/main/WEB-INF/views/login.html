@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+</head>
+<body>
+<a href="/">main page</a>
+<form action="/login/process" method="post">
+    <h3>Log in</h3>
+    <label for="username">Enter your username below</label>
+    <input type="text" name="username" id="username"
+     placeholder="username">
+
+    <label for="password">Enter your password below</label>
+    <input type="password" name="password" id="password"
+     placeholder="password">
+
+    <input type="submit" value="Log in" id="submit">
+</form>
+<div th:if="${error}">
+    <p style="color:red;">Bad credentials</p>
+</div>
+
+<style>
+	#username, #password {
+		margin-bottom: 10px;
+		display: block;
+	}
+	form {
+		width: 400px;
+		display: flex;
+		flex-direction: column;
+	}
+</style>
+
+</body>
+</html>

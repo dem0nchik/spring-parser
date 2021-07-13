@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<br><br>
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Send file">
-</form>
+    <h1>Parser Files</h1>
+    <div th:if="${isAuth}">
+        <a href="/logout">Logout from account</a>
+        <br>
+        <br>
+        <a href="/parse">Parse the file</a>
+        <br>
+        <br>
+        <a href="/results">View results</a>
+    </div>
+    <div th:unless="${isAuth}">
+        <a href="/sign_up">Регистрация</a>
+        <br/>
+        <br>
+        <a href="/login">Вход</a>
+    </div>
 </body>
 </html>

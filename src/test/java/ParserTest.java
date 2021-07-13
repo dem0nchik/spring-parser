@@ -1,5 +1,5 @@
-import com.test.spring.Parser;
-import com.test.spring.ResultValidation;
+import com.test.spring.parser.Parser;
+import com.test.spring.parser.ResultValidation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

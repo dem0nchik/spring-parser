@@ -6,9 +6,16 @@
 </head>
 <body style="font-size:18px;">
     <a href="/">main page</a>
+    <br>
+    <a href="/parse">parse file</a>
   <h1>Result parse of file:</h1>
-  <p>Unique words:&nbsp;<span th:text="${count}">count</span> </p>
-  <pre th:text="${data}"></pre>
+  <div th:if="${hasError}">
+    <p th:text="${error}" style="color:red;"></p>
+  </div>
 
+    <div th:unless="${hasError}">
+        <p>Unique words:&nbsp;<span th:text="${count}">count</span> </p>
+        <pre th:text="${data}"></pre>
+    </div>
 </body>
 </html>

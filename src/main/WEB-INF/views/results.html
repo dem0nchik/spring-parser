@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+
+<div class="wrapper" th:each="result: ${results}">
+    <span>User:&nbsp;<span th:text="${result.username}" /></span>
+    <span>File name:&nbsp;<span th:text="${result.filename}" /></span>
+    <span>File size:&nbsp;<span th:text="${result.fileSize}" /></span>
+    <span>Date: &nbsp;<span th:text="${result.dateAdding}" /></span>
+    <span>Filepath: &nbsp;<a th:href="@{/view_result?(path=${result.getFilepath()})}" th:text="${result.filepath}"></a></span>
+    <br>
+    <hr>
+</div>
+
+<style>
+    span {
+        padding: 5px;
+        border: 1px solid #333;
+    }
+    .wrapper {
+        margin: 15px 0;
+    }
+</style>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration</title>
+</head>
+<body>
+<a href="/">main page</a>
+
+<form action="/sign_up" method="post" th:object="${user}">
+    <h3>Registration</h3>
+
+    <p class="err" th:if="${usernameError}">This username already exists</p>
+    <div class="err" th:if="${#fields.hasErrors('username')}"  th:errors="*{username}">Username error</div>
+    <label for="username">Enter your username below</label>
+    <input type="text" name="username" id="username"
+     placeholder="username">
+
+    <div class="err" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+    <label for="password">Enter your password below</label>
+    <input type="password" name="password" id="password"
+     placeholder="password">
+
+    <input type="submit" value="Reg" id="submit">
+</form>
+
+<style>
+	#username, #password {
+		margin-bottom: 10px;
+		display: block;
+	}
+	form {
+		width: 400px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.err {
+	    color: red;
+	}
+</style>
+
+</body>
+</html>
