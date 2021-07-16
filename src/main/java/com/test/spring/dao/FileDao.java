@@ -1,12 +1,9 @@
 package com.test.spring.dao;
 
 import com.test.spring.models.FileModel;
-import com.test.spring.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
@@ -37,13 +34,13 @@ public class FileDao {
             file.getName(), file.getSize(), file.getFilePath());
     }
 
-    public void saveResultInFile(HashMap<String, Integer> map, String filepath) {
+    public void saveResultInFile(HashMap<String, Integer> map, String filepath) throws IOException {
         try (FileOutputStream fos = new FileOutputStream(filepath);
              ObjectOutputStream oos = new ObjectOutputStream(fos)
         ){
             oos.writeObject(map);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("cannot save file of results");
         }
     }
 

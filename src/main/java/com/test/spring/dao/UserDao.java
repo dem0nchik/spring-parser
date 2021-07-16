@@ -19,13 +19,17 @@ public class UserDao {
     }
 
     public UserModel getUserById(int id) {
-        return jdbcTemplate.queryForObject("SELECT u_id as id, * FROM users WHERE id=?", new BeanPropertyRowMapper<>(UserModel.class), id);
+        return jdbcTemplate.queryForObject("SELECT u_id as id, * FROM users WHERE id=?",
+                new BeanPropertyRowMapper<>(UserModel.class), id
+        );
     }
 
     public UserModel getUserByUsername(String username) {
         List<UserModel> users =
-                jdbcTemplate.query("SELECT u_id as id, * FROM users WHERE username=?", new BeanPropertyRowMapper<>(UserModel.class), username);
-        if(users.size() == 0) {
+                jdbcTemplate.query("SELECT u_id as id, * FROM users WHERE username=?",
+                        new BeanPropertyRowMapper<>(UserModel.class), username
+                );
+        if (users.size() == 0) {
             return null;
         } else {
             return users.get(0);
@@ -33,10 +37,14 @@ public class UserDao {
     }
 
     public void save(UserModel user) {
-        jdbcTemplate.update("INSERT INTO users(username, password) VALUES(?, ?)", user.getUsername(), user.getPassword());
+        jdbcTemplate.update("INSERT INTO users(username, password) VALUES(?, ?)",
+                user.getUsername(), user.getPassword()
+        );
     }
 
     public List<UserModel> getAll() {
-        return jdbcTemplate.query("SELECT u_id as id, * FROM users", new BeanPropertyRowMapper<>(UserModel.class));
+        return jdbcTemplate.query("SELECT u_id as id, * FROM users",
+                new BeanPropertyRowMapper<>(UserModel.class)
+        );
     }
 }

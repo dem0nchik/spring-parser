@@ -5,14 +5,14 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 
 @Service
-public class FileValidator implements Validator{
+public class FileValidator implements Validator {
     @Override
     public ResultValidation validate(File file) {
-        if(!file.exists()) {
+        if (!file.exists()) {
             return new ResultValidation(false, "file is not exist");
-        } else if(!file.isFile()) {
+        } else if (!file.isFile()) {
             return new ResultValidation(false, "is not file");
-        } else if(file.length() == 0) {
+        } else if (file.length() == 0) {
             return new ResultValidation(false, "file is empty");
         }
 

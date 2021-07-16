@@ -10,12 +10,14 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-    @Autowired
     private UserDao userDao;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+        this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<UserModel> getAll() {

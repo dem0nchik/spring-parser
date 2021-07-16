@@ -18,24 +18,29 @@ import java.util.List;
 
 @Service
 public class AuthProviderImpl implements AuthenticationProvider {
+    private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthProviderImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+        this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         UserModel user = userDao.getUserByUsername(username);
-        if(user == null) {
+
+        if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+
         String password = authentication.getCredentials().toString();
-        if( !passwordEncoder.matches(password, user.getPassword()) ) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Bad credentials");
         }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         return new UsernamePasswordAuthenticationToken(user, null, authorities);
     }

@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public class FileResultDao {
-
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired

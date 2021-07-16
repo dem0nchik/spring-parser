@@ -9,18 +9,18 @@ import java.util.HashMap;
 
 @Service
 public class Parser {
-    private Validator validator;
+    private final Validator validator;
 
     @Autowired
     public Parser(@Qualifier("fileValidator") Validator validator) {
         this.validator = validator;
     }
 
-    public HashMap<String, Integer> countUniqueWordsFromFile(File file)  {
+    public HashMap<String, Integer> countUniqueWordsFromFile(File file) {
         HashMap<String, Integer> map = new HashMap<>();
         ResultValidation validation = validator.validate(file);
 
-        if(validation.isValid()) {
+        if (validation.isValid()) {
             try (InputStream inputStream = new FileInputStream(file)) {
                 map = countUniqueWords(inputStream);
             } catch (IOException e) {
@@ -28,8 +28,8 @@ public class Parser {
             }
         } else {
             System.out.println(validation.getError());
-                if(validation.getError().equals("file is not exist"))
-                    throw new RuntimeException("Error parse file");
+            if (validation.getError().equals("file is not exist"))
+                throw new RuntimeException("Error parse file");
         }
         return map;
     }
@@ -45,11 +45,11 @@ public class Parser {
                 char sym = (char) data;
 
                 if (sym != '\r' && sym != '\n'
-                    && sym != ' ' && sym != ','
-                    && sym != '.' && sym != ';'
+                        && sym != ' ' && sym != ','
+                        && sym != '.' && sym != ';'
                 ) {
                     word += sym;
-                } else if(word.length() != 0) {
+                } else if (word.length() != 0) {
                     if (map.containsKey(word))
                         map.put(word, map.get(word) + 1);
                     else
@@ -61,7 +61,7 @@ public class Parser {
                 }
                 data = inputStreamReader.read();
             }
-            if(word.length() != 0)
+            if (word.length() != 0)
                 if (map.containsKey(word))
                     map.put(word, map.get(word) + 1);
                 else
@@ -80,9 +80,5 @@ public class Parser {
             data.append(key).append(" - ").append(map.get(key)).append("\n");
         }
         return data.toString();
-    }
-
-    public void printMapOfWords(HashMap<String, Integer> map) {
-        map.keySet().forEach(key -> System.out.println(key + " - " + map.get(key)));
     }
 }

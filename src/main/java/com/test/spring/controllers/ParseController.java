@@ -19,14 +19,16 @@ import java.util.List;
 
 @Controller
 public class ParseController {
-    @Autowired
-    private Parser parser;
+    private final Parser parser;
+    private final FileStatusService fileStatusService;
+    private final FileResultsService fileResultsService;
 
     @Autowired
-    private FileStatusService fileStatusService;
-
-    @Autowired
-    private FileResultsService fileResultsService;
+    public ParseController(Parser parser, FileStatusService fileStatusService, FileResultsService fileResultsService) {
+        this.parser = parser;
+        this.fileStatusService = fileStatusService;
+        this.fileResultsService = fileResultsService;
+    }
 
     @GetMapping("/parse")
     public String parse() {
@@ -35,12 +37,12 @@ public class ParseController {
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile multipartFile,
-                             Model model, Authentication authentication) throws IOException {
-        if(multipartFile.getSize() > 1000000) {
+                             Model model, Authentication authentication) throws Exception {
+        if (multipartFile.getSize() > 1000000) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", "File is too large. It must be less than 1mb.");
             return "result";
-        } else if(multipartFile.getSize() == 0) {
+        } else if (multipartFile.getSize() == 0) {
             model.addAttribute("hasError", true);
             model.addAttribute("error", "File is empty");
             return "result";
@@ -51,7 +53,7 @@ public class ParseController {
         fileStatusService.addResult(multipartFile, authentication, map);
 
         String data = parser.mapOfWordsToString(map);
-        model.addAttribute("data" , data);
+        model.addAttribute("data", data);
         model.addAttribute("count", (long) map.keySet().size());
         return "result";
     }
@@ -70,7 +72,7 @@ public class ParseController {
         HashMap<String, Integer> map = fileResultsService.getResultsFromFile(filepath);
 
         String data = parser.mapOfWordsToString(map);
-        model.addAttribute("data" , data);
+        model.addAttribute("data", data);
         model.addAttribute("count", (long) map.keySet().size());
         return "result";
     }

@@ -16,13 +16,16 @@ import javax.validation.Valid;
 
 @Controller
 public class AuthController {
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/login")
-    public String login(@RequestParam(name="error", required = false) Boolean err, Model model) {
-        if(Boolean.TRUE.equals(err)) {
+    public String login(@RequestParam(name = "error", required = false) Boolean err, Model model) {
+        if (Boolean.TRUE.equals(err)) {
             model.addAttribute("error", true);
         }
         return "login";
@@ -35,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/sign_up")
     public String signUp(@ModelAttribute("user") @Valid UserModel user, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "/sign_up";
         }
         boolean isAdded = userService.add(user);

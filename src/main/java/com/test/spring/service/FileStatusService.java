@@ -8,8 +8,5 @@ import java.util.HashMap;
 
 
 public interface FileStatusService {
-    FileModel getOne(int id);
-    void add(FileModel fileModel);
-
-    void addResult(MultipartFile multipartFile, Authentication authentication, HashMap<String, Integer> map);
+    void addResult(MultipartFile multipartFile, Authentication authentication, HashMap<String, Integer> map) throws Exception;
 }

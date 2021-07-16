@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id "application"
     id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'jacoco'
 }
 
 sourceCompatibility = 1.8
@@ -14,7 +15,6 @@ version '1.0-SNAPSHOT'
 application {
     mainClass = 'com.test.spring.StartupApp'
 }
-
 
 repositories {
     mavenCentral()
@@ -44,7 +44,15 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.2.0.Final'
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
+    testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: springSecurityVersion
+    testImplementation group: 'org.springframework', name: 'spring-test', version: springVersion
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.11.2'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
@@ -61,6 +69,16 @@ task copyTask(type: Copy) {
     into 'build/libs/WEB-INF/'
 }
 
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/jacoco")
+}
+
+jacocoTestReport {
+   dependsOn test
+}
+
 test {
+    finalizedBy jacocoTestReport
     useJUnitPlatform()
 }

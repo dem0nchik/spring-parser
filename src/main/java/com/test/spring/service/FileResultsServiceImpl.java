@@ -10,13 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class FileResultsServiceImpl implements FileResultsService{
+public class FileResultsServiceImpl implements FileResultsService {
+    private final FileResultDao fileResultDao;
+    private final FileDao fileDao;
 
     @Autowired
-    private FileResultDao fileResultDao;
-
-    @Autowired
-    private FileDao fileDao;
+    public FileResultsServiceImpl(FileResultDao fileResultDao, FileDao fileDao) {
+        this.fileResultDao = fileResultDao;
+        this.fileDao = fileDao;
+    }
 
     @Override
     public List<FileResultModel> getAllResults() {

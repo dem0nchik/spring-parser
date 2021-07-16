@@ -1,10 +1,14 @@
 package com.test.spring.config.properties;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
+@Getter
 @PropertySource("classpath:application.properties")
 public class DataSourceProperties {
     @Value("${source.driveClassName}")
@@ -15,20 +19,4 @@ public class DataSourceProperties {
     private String username;
     @Value("${source.password}")
     private String password;
-
-    public String getDriverClassName() {
-        return driverClassName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }
